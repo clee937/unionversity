@@ -19,12 +19,12 @@ type StudyGroup = {
 
 type SearchEventsOptions = {
   query: string | number;
-  eventType: "courses" | "groups";
+  eventType: "course" | "group";
 };
 
 const searchEvents = (options: SearchEventsOptions) => {
   const events: Course[] | StudyGroup[] =
-    options.eventType === "courses" ? courses : studyGroups;
+    options.eventType === "course" ? courses : studyGroups;
 
   return events.filter((event: Course | StudyGroup) => {
     // type narrowing / type guard
@@ -43,12 +43,17 @@ let enrolledEvents: (Course | StudyGroup)[] = [];
 
 // add event to enrolled events list
 const enroll = (event: Course | StudyGroup) => {
-  enrolledEvents = [...enrolledEvents, event];
+  enrolledEvents.push(event);
 };
 
-const searchResults = searchEvents({ query: "art", eventType: "courses" });
+const printCourseTitles = (enrolledEvents: (Course | StudyGroup)[]) => {
+  console.log("You are enrolled in the following: ");
+  enrolledEvents.forEach((event) => console.log(event.title));
+};
+
+const searchResults = searchEvents({ query: "art", eventType: "course" });
 
 enroll(searchResults[0]);
 enroll(searchResults[1]);
 
-console.log(enrolledEvents);
+printCourseTitles(enrolledEvents);
