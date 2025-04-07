@@ -39,4 +39,16 @@ const searchEvents = (options: SearchEventsOptions) => {
   });
 };
 
+let enrolledEvents: (Course | StudyGroup)[] = [];
+
+// add event to enrolled events list
+const enroll = (event: Course | StudyGroup) => {
+  enrolledEvents = [...enrolledEvents, event];
+};
+
 const searchResults = searchEvents({ query: "art", eventType: "courses" });
+
+enroll(searchResults[0]);
+enroll(searchResults[1]);
+
+console.log(enrolledEvents);
